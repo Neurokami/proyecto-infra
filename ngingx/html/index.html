@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Marketplace - Panel de Vendedor</title>
+    <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+    <header class="topbar">
+        <div class="topbar__brand">
+            <span class="topbar__logo">🛒</span>
+            <span class="topbar__title">Marketplace · Vendedores</span>
+        </div>
+        <button id="logout-btn" class="btn btn--ghost btn--small hidden">Cerrar sesión</button>
+    </header>
+
+    <main class="layout">
+        <!-- Auth section -->
+        <section id="auth-section" class="card auth">
+            <div class="auth__column">
+                <h1 class="card__title">Acceso de vendedores</h1>
+                <p class="card__subtitle">Ingresa con tu documento para continuar.</p>
+
+                <form id="login-form" class="form">
+                    <div class="form__group">
+                        <label for="login-documento" class="form__label">Documento</label>
+                        <input
+                            type="text"
+                            id="login-documento"
+                            name="documento"
+                            class="form__control"
+                            required
+                            autocomplete="username"
+                        />
+                    </div>
+                    <button type="submit" class="btn btn--primary form__submit">Ingresar</button>
+                </form>
+
+                <p class="auth__hint">
+                    ¿Eres nuevo vendedor?
+                    <button type="button" id="show-register" class="link-button">Regístrate aquí</button>
+                </p>
+
+                <div id="auth-messages" class="messages" aria-live="polite"></div>
+            </div>
+
+            <div class="auth__column auth__column--secondary">
+                <h2>Panel para vendedores</h2>
+                <ul class="auth__features">
+                    <li>Publicar nuevos productos de forma rápida.</li>
+                    <li>Consultar todo tu catálogo publicado.</li>
+                    <li>Revisar el historial de ventas asociadas a tus productos.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Register section -->
+        <section id="register-section" class="card auth hidden">
+            <div class="auth__column">
+                <h1 class="card__title">Registro de nuevo vendedor</h1>
+                <p class="card__subtitle">Completa tus datos para crear tu cuenta.</p>
+
+                <form id="register-form" class="form">
+                    <div class="form__grid">
+                        <div class="form__group">
+                            <label for="reg-documento" class="form__label">Documento</label>
+                            <input
+                                type="text"
+                                id="reg-documento"
+                                name="documento"
+                                class="form__control"
+                                required
+                            />
+                        </div>
+                        <div class="form__group">
+                            <label for="reg-nombre" class="form__label">Nombre</label>
+                            <input
+                                type="text"
+                                id="reg-nombre"
+                                name="nombre"
+                                class="form__control"
+                                required
+                            />
+                        </div>
+                        <div class="form__group">
+                            <label for="reg-telefono" class="form__label">Teléfono</label>
+                            <input
+                                type="tel"
+                                id="reg-telefono"
+                                name="telefono"
+                                class="form__control"
+                            />
+                        </div>
+                        <div class="form__group">
+                            <label for="reg-email" class="form__label">Correo electrónico</label>
+                            <input
+                                type="email"
+                                id="reg-email"
+                                name="email"
+                                class="form__control"
+                            />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn--primary form__submit">Crear cuenta</button>
+                </form>
+
+                <p class="auth__hint">
+                    ¿Ya estás registrado?
+                    <button type="button" id="show-login" class="link-button">Volver al inicio de sesión</button>
+                </p>
+
+                <div id="register-messages" class="messages" aria-live="polite"></div>
+            </div>
+
+            <div class="auth__column auth__column--secondary">
+                <h2>Requisitos mínimos</h2>
+                <ul class="auth__features">
+                    <li>Documento de identificación válido.</li>
+                    <li>Datos de contacto actualizados.</li>
+                    <li>Compromiso con la buena atención al cliente.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Dashboard section -->
+        <section id="dashboard-section" class="dashboard hidden">
+            <div class="dashboard__header">
+                <div>
+                    <h1 class="dashboard__title">Panel de vendedor</h1>
+                    <p class="dashboard__subtitle">Gestiona tus productos y revisa tus ventas.</p>
+                </div>
+                <div class="dashboard__welcome">
+                    <span>Bienvenido,</span>
+                    <strong id="vendor-name"></strong>
+                </div>
+            </div>
+
+            <section class="card">
+                <h2 class="card__title">Publicar nuevo producto</h2>
+                <form id="product-form" class="form form--inline">
+                    <div class="form__group">
+                        <label for="prod-nombre" class="form__label">Nombre</label>
+                        <input
+                            type="text"
+                            id="prod-nombre"
+                            name="nombre"
+                            class="form__control"
+                            required
+                        />
+                    </div>
+                    <div class="form__group">
+                        <label for="prod-descripcion" class="form__label">Descripción</label>
+                        <input
+                            type="text"
+                            id="prod-descripcion"
+                            name="descripcion"
+                            class="form__control"
+                        />
+                    </div>
+                    <div class="form__group">
+                        <label for="prod-precio" class="form__label">Precio</label>
+                        <input
+                            type="number"
+                            id="prod-precio"
+                            name="precio"
+                            class="form__control"
+                            min="0"
+                            required
+                        />
+                    </div>
+                    <div class="form__group">
+                        <label for="prod-stock" class="form__label">Stock</label>
+                        <input
+                            type="number"
+                            id="prod-stock"
+                            name="stock"
+                            class="form__control"
+                            min="0"
+                            required
+                        />
+                    </div>
+                    <button type="submit" class="btn btn--primary form__submit">Publicar</button>
+                </form>
+                <div id="product-messages" class="messages" aria-live="polite"></div>
+            </section>
+
+            <section class="card">
+                <div class="card__header">
+                    <h2 class="card__title">Mis productos publicados</h2>
+                    <button id="refresh-products" class="btn btn--ghost btn--small">Actualizar</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="table" aria-label="Listado de productos">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody id="products-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card__header">
+                    <h2 class="card__title">Ventas de mis productos</h2>
+                    <button id="refresh-sales" class="btn btn--ghost btn--small">Actualizar</button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="table" aria-label="Listado de ventas">
+                        <thead>
+                            <tr>
+                                <th>ID Venta</th>
+                                <th>Fecha</th>
+                                <th>Cliente</th>
+                                <th>Items</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="sales-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <template id="row-empty-template">
+        <tr>
+            <td colspan="5" class="table__empty">Sin registros para mostrar.</td>
+        </tr>
+    </template>
+
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
