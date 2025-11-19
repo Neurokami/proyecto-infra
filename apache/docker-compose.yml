@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  apache:
+    build: .
+    container_name: apache_uq
+    ports:
+      - "8080:80"
+    volumes:
+      - /mnt/raid_1/apache_html:/usr/local/apache2/htdocs:ro
+      - /mnt/raid_1/apache_config/httpd.conf:/usr/local/apache2/conf/httpd.conf:ro

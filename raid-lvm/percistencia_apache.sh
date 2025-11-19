@@ -1,37 +1,33 @@
 #!/bin/bash
-# crear_raid_lvm.sh
-# Script para crear RAID5 -> LVM -> formatear -> montar -> persistencia fstab/mdadm
 # ADVERTENCIA: destruirá datos en los discos indicados.
 
 set -euo pipefail
 
 #########################
-# CONFIGURACIÓN (edita)
+# CONFIGURACIÓN
 #########################
-# Dispositivos que usarán el RAID (separados por espacios)
-DEVICES=(/dev/sdb /dev/sdc /dev/sdd)
 
-# Dispositivo md a crear
-RAID_DEVICE=/dev/md0
+# Discos para este RAID
+DEVICES=(/dev/sdh /dev/sdi /dev/sdj)
 
-# Nivel RAID y número de dispositivos (auto)
-RAID_LEVEL=5
+# Dispositivo RAID
+RAID_DEVICE=/dev/md3
 
-# Punto de montaje temporal para el md (antes de crear LVM)
-TEMP_MD_MOUNT=/mnt/raid-md
+# Nivel RAID
+RAID_LEVEL=1
 
-# Grupo/volumen lógico
-VG_NAME=vg-raid5
-LV_NAME=lv-datos
-LV_MOUNT=/mnt/raid   # Punto final donde quieres montar el LV
+TEMP_MD_MOUNT=/mnt/md-apache-tmp
 
-# Fichero mdadm.conf (Ubuntu/Debian)
+# Grupo y volumen lógico
+VG_NAME=vg_apache_1
+LV_NAME=lv_apache_datos
+LV_MOUNT=/mnt/apache
+
 MDADM_CONF=/etc/mdadm/mdadm.conf
 
-# Ejecutar realmente el script? 0 = solo muestra lo que haría, 1 = ejecuta.
-EXECUTE=0
+# EXECUTE=1 para ejecutar, 0 para simulación
+EXECUTE=1
 
-# Fin configuración
 #########################
 
 log() { echo -e "\n[INFO] $*"; }
@@ -41,8 +37,8 @@ if [[ $EUID -ne 0 ]]; then
   err "Tienes que ejecutar el script como root (sudo)."
 fi
 
-if [[ ${#DEVICES[@]} -lt 3 ]]; then
-  err "RAID5 necesita al menos 3 dispositivos. Revisa la variable DEVICES."
+if [[ ${#DEVICES[@]} -lt 2 ]]; then
+  err "RAID1 necesita al menos 2 dispositivos. Revisa la variable DEVICES."
 fi
 
 NUM_DEVICES=${#DEVICES[@]}
@@ -83,7 +79,7 @@ check_devices() {
   done
 }
 
-# 3) Crear RAID5
+# 3) Crear RAID (RAID1 en este script)
 create_raid() {
   # Ensures previous md device does not exist
   if [[ -e "$RAID_DEVICE" ]]; then

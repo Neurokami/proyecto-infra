@@ -2,7 +2,8 @@ services:
   php:
     build:
       context: .
-      dockerfile: Dockerfile.php
+      dockerfile: Dockerfile
+      target: php
     container_name: my-php-fpm
     volumes:
       - ./html:/var/www/html
@@ -13,11 +14,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+      target: nginx
     container_name: my-nginx
     ports:
       - "80:80"
     volumes:
-      - ./html:/var/www/html:ro
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - /mnt/raid_1/html:/var/www/html:ro
+      - /mnt/raid_1/nginx.conf:/etc/nginx/nginx.conf:ro
     depends_on:
       - php

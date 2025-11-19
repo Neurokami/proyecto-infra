@@ -12,7 +12,6 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - /mnt/raid:/var/lib/mysql
+      - /mnt/raid/mysql:/var/lib/mysql
 
-volumes:
-  db_data:
+
