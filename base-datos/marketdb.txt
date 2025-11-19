@@ -1,5 +1,9 @@
-CREATE DATABASE IF NOT EXISTS marketplace;
-USE marketplace;
+CREATE USER  IF NOT EXISTS 'user'@'%' IDENTIFIED BY 'userpass';
+GRANT ALL PRIVILEGES ON market.* TO 'user'@'%';
+FLUSH PRIVILEGES;
+
+CREATE DATABASE IF NOT EXISTS market;
+USE market;
 
 -- ==========================================
 -- TABLA: vendedores (publican productos)
