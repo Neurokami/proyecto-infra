@@ -233,11 +233,25 @@ docker compose up -d
 ```
 
 Comprobaciones:
-
+- Verificaccion que el contenedor  `nginx` esta en estado `running`.
+![Comprobacion de ejecucion de nginx](./imgs/nginx-ejecucion.jpg)
 - Acceder a la página principal en `http://localhost` y verificar que el frontend carga.
-- Probar algunos endpoints de la API (por ejemplo, `/api/productos.php`, `/api/ventas.php`,
-  endpoints de login y registro) y comprobar que responden correctamente usando la base de datos.
-
+![Comprobacion de interfas](./imgs/nginx-ui.jpg)
+- Probar algunos endpoints de la API.
+  -Registro de clientes.
+  ![Registro de clientes](./imgs/nginx-registro.jpg)
+  -Login de clientes.
+  ![Login de clientes](./imgs/nginx-login.jpg)
+  -Pagina del vendedor.
+  ![Pagina del vendedor](./imgs/nginx-ui-vendedor.jpg)
+  -Comprobacion de persistencia.
+  ![Comprobacion de persistencia](./imgs/nginx-persistencia.jpg)
+  -Creacion de productos.
+  ![Creacion de productos](./imgs/nginx-producto.jpg)
+  ![Refresco de pagina](./imgs/nginx-producto-1.jpg)
+  -comprobaccion de persistencia de productos.
+  ![Comprobacion de persistencia de productos](./imgs/nginx-persistencia-producto.jpg)
+  
 ### 5.3. Apache
 
 En la carpeta `apache/`:
