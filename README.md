@@ -208,8 +208,20 @@ Comprobaciones:
 - Verificaccion que el contenedor `mariadb_uq` está en estado `running`.
   ![Comprobacion de ejcucion de la base de datos con dokcer ps](./imgs/db-ejecucion.jpg)
 - Conectarse a la base de datos y comprobar:
-  - Que existen la base de datos y las tablas del market online (clientes, productos, ventas).
-  - Que se pueden hacer inserciones y consultas básicas.
+  - Entrar a la base de datos.
+  ![Entrando a la base de datos por teminal](./imgs/db-adentro-sh.jpg)
+  - Creacion de una base de datos market.
+  ![Creacion de la base de datos](./imgs/db-creacion.jpg)
+  - Crear tablas para el negocio.
+  ![Creacion de tablas](./imgs/db-tablas.jpg)
+  - Comprobar insersion de datos a las tablas.
+  ![Insertar datos en las tablas](./imgs/db-insert.jpg)
+  - Comprobar existencia de la base de datos y las tablas del market (clientes, productos, ventas).
+  ![Comprobacion de datos](./imgs/db-comprobacion.jpg)
+  -Descripcion de la tablas.
+  ![Descripcion de tablas](./imgs/db-descripcion.jpg)
+  - Comprobar persistencia de datos.
+  ![Comprobacion de persistencia](./imgs/db-persistencia.jpg)
 
 ### 5.2. Nginx + PHP-FPM
 
