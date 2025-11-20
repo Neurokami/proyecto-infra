@@ -33,8 +33,8 @@ RUN if getent group ${GID}; then \
       group_name=www; \
     fi
 
-COPY . /var/www/html
-RUN chown -R www-data:www-data /var/www
+COPY . /usr/local/apache2/htdocs
+RUN chown -R www-data:www-data /usr/local/apache2/htdocs
 
 # Exponemos el puerto 80
 EXPOSE 80
