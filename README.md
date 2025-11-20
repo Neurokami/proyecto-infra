@@ -205,7 +205,8 @@ docker compose up -d
 
 Comprobaciones:
 
-- Verificar que el contenedor `mariadb_uq` está en estado `running`.
+- Verificaccion que el contenedor `mariadb_uq` está en estado `running`.
+  ![Comprobacion de ejcucion de la base de datos con dokcer ps](./imgs/db-ejecucion.jpg)
 - Conectarse a la base de datos y comprobar:
   - Que existen la base de datos y las tablas del market online (clientes, productos, ventas).
   - Que se pueden hacer inserciones y consultas básicas.
