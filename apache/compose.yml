@@ -1,0 +1,33 @@
+services:
+  php-fpm:
+    container_name: laravel_app
+    build:
+      context: ./docker/php-fpm
+      dockerfile: Dockerfile
+    volumes:
+      - .:/var/www/html
+    networks:
+      - red_app
+      - red_db
+
+  webserver:
+    build:
+      context: ./docker/apache
+      dockerfile: Dockerfile
+    container_name: laravel_server
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+    depends_on:
+      - php-fpm
+    networks:
+      - red_app
+    # restart: always
+
+networks:
+  red_app:
+    driver: bridge
+  red_db:
+    external: true
