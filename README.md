@@ -90,7 +90,7 @@ Los mismos contenidos pueden utilizarse con Podman usando el `Dockerfile` como `
 - Propósito previsto:
   - Servir el frontend de clientes del market: registro, visualización de productos, compras, etc.
 - Imagen de Apache:
-  - [`apache/Dockerfile`](apache/Dockerfile:1)
+  - [`apache/Dockerfile`](apache/docker/apache/Dockerfile:1)
 - Sitio web servido por Apache:
   - [`apache/html/index.html`](apache/html/index.html:1)
 - Configuración principal:
@@ -181,9 +181,7 @@ A nivel cronológico, el trabajo se puede resumir así:
      y publicar productos, interactuando con la base de datos de ventas.
 
 6. **Preparación del contenedor Apache para clientes**
-   - Creación de la imagen de Apache en [`apache/Dockerfile`](apache/Dockerfile:1) y del sitio de
-     ejemplo en [`apache/html/index.html`](apache/html/index.html:1), con la idea de servir en el futuro
-     el frontend de clientes del market online.
+   - Creación de la imagen de Apache (httpd) haciendo uso de la herramienta `compose` de docker y una pequeña prueba de funcionamiento usando laravel.
 
 7. **Despliegue de Netdata**
    - Añadido de Netdata usando [`netdata/Dockerfile`](netdata/Dockerfile:1) y
@@ -254,6 +252,10 @@ Comprobaciones:
   
 ### 5.3. Apache
 
+El apartado concerniente a apache se encuentra formado por 2 contenedores, uno para php-fpm y otro httpd.
+
+La aplicacion es un ejemplo sencillo de comunicacion entre contenedores usando el laravel. Del mismo modo que se realizo con el servicio de nginx se hace uso de una red puente para conectar el contenedor de php con el de la base de datos.
+
 En la carpeta `apache/`:
 
 ```bash
@@ -261,12 +263,23 @@ cd apache
 docker compose up -d
 ```
 
-Comprobaciones:
+**Comprobaciones:**
 
-- Acceder a `http://localhost:8080` y visualizar la página de prueba servida por Apache.
-- Verificar que el contenido se sirve desde el volumen configurado (LVM asociado a Apache).
+- Acceder a `http://localhost:8080` y visualizar la página de bienvenida para la aplicacion de prueba
+
+![Comprobacion pagina de inicio apache](./imgs/apache-inicio.png)
+
+- Acceder al apartado de productos y verificar si hay algun producto
+
+![Comprobacion pagina de productos apache](./imgs/apache-productos-vacio.png)
+
+- Crear un producto en el contenedor de la base de datos (puede ser usando la aplicacion de nginx) y comprobar nuevamente el apartado de productos
+
+![Comprobacion pagina de productos apache](./imgs/apache-productos.png)
 
 ### 5.4. Netdata
+
+Para monitorizar el sistema se hizo uso de la herramienta Netdata esta tambien se encuentra montada en un contenedor.
 
 En la carpeta `netdata/`:
 
@@ -275,12 +288,20 @@ cd netdata
 docker compose up -d
 ```
 
-Comprobaciones:
+**Comprobaciones:**
 
-- Acceder a `http://localhost:19999` en el navegador.
-- Verificar que el dashboard muestra:
-  - Recursos del host (CPU, RAM, disco, red).
-  - Contenedores Docker y sus métricas (IO, CPU, memoria).
+- Acceder a `http://localhost:19999` en el navegador y comprobar la pagina de inicio de netdata.
+
+![comprobacion inicio netdata](./imgs/net-data-info.png)
+
+- verificar en el dashboard las metricas que nos propociona la herramienta (CPU, RAM, disco, red)
+
+![comprobacion inicio netdata](./imgs/net-data-metricas.png)
+
+- verificar que la herramienta este detectando correctamente los contenedores
+
+![comprobacion inicio netdata](./imgs/net-data-cgroups.png)
+
 
 ### 5.5. Verificación de la persistencia
 
@@ -339,5 +360,5 @@ Esto se aplica a las imágenes de:
 
 - Base de datos: [`base-datos/Dockerfile`](base-datos/Dockerfile:1)
 - Nginx + PHP-FPM: [`nginx/Dockerfile`](nginx/Dockerfile:1)
-- Apache: [`apache/Dockerfile`](apache/Dockerfile:1)
+- Apache: [`apache/docker/apache/Dockerfile`](apache/Dockerfile:1)
 - Netdata: [`netdata/Dockerfile`](netdata/Dockerfile:1)
