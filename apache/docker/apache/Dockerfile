@@ -21,7 +21,7 @@ RUN apt-get update && apt-get install -y \
 # COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
 
 ARG UID=1000
-ARG GID=983
+ARG GID=1000
 
 # Create a new user with the specified UID and GID, reusing an existing group if GID exists
 RUN if getent group ${GID}; then \

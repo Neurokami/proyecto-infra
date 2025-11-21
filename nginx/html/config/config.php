@@ -8,7 +8,7 @@ declare(strict_types=1);
  * talking to the "db" service from the MariaDB docker-compose.
  */
 
-const DB_HOST = 'host.docker.internal';
+const DB_HOST = 'db';
 const DB_PORT = 3306;
 const DB_NAME = 'market';
 

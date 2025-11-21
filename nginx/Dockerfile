@@ -9,6 +9,6 @@ FROM nginx:latest AS nginx
 
 RUN echo "Construyendo stage NGINX"
 
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY ./nginx.conf /etc/nginx/nginx.conf
 
 WORKDIR /var/www/html

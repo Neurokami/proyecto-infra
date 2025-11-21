@@ -11,6 +11,7 @@ COPY my.cnf /etc/my.cnf
 EXPOSE 3306
 
 COPY docker-entrypoint.sh /docker-entrypoint.sh
+COPY marketdb.txt /etc/mysql/marketdb.txt
 RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]

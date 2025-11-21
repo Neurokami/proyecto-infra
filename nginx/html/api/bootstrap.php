@@ -76,8 +76,16 @@ function get_pdo_or_fail(): PDO
     } catch (Throwable $e) {
         error_log('DB connection error: ' . $e->getMessage());
         // Incluimos el mensaje real del error en la respuesta para depurar.
+        $host = getenv('DB_HOST') ?: DB_HOST;
+    $port = getenv('DB_PORT') ?: (string) DB_PORT;
+    $db   = getenv('DB_NAME') ?: DB_NAME;
+    $user = getenv('DB_USER') ?: DB_USER;
+    $pass = getenv('DB_PASS') ?: DB_PASS;
+
+    $dsn = sprintf('mysql:host=%s;port=%s;dbname=%s;charset=utf8mb4', $host, $port, $db);
         json_error('Error interno de base de datos.', 500, [
             'error' => $e->getMessage(),
+            'msg' => $dsn
         ]);
     }
 }

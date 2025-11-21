@@ -21,12 +21,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /usr/local/apache2/htdocs
 
-COPY . /usr/local/apache2/htdocs
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN chown -R www-data:www-data /var/www
-
 ARG UID=1000
-ARG GID=983
+ARG GID=1000
 
 # Create a new user with the specified UID and GID, reusing an existing group if GID exists
 RUN if getent group ${GID}; then \
@@ -38,9 +34,17 @@ RUN if getent group ${GID}; then \
       group_name=www; \
     fi
 
+RUN chown -R ${UID}:${GID} .
+
 # Dynamically update php-fpm to use the new user and group
 RUN sed -i "s/user = www-data/user = www/g" /usr/local/etc/php-fpm.d/www.conf && \
     sed -i "s/group = www-data/group = $group_name/g" /usr/local/etc/php-fpm.d/www.conf
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+COPY . /usr/local/apache2/htdocs
+RUN composer install --no-interaction --prefer-dist --optimize-autoloader
+# RUN php artisan key:generate
 
 USER www
 
