@@ -8,18 +8,6 @@ RUN apt-get update && apt-get install -y \
     libapache2-mod-fcgid \
     && rm -rf /var/lib/apt/lists/*
 
-# Habilitamos los módulos necesarios en Apache
-# RUN a2enmod proxy \
-#     && a2enmod proxy_fcgi \
-#     && a2enmod rewrite \
-#     && a2enmod headers \
-#     && a2enmod setenvif \
-#     && a2enmod ssl \
-#     && a2enmod mpm_event
-
-# Copiamos el archivo de configuración personalizado de Apache
-# COPY ./httpd.conf /usr/local/apache2/conf/httpd.conf
-
 ARG UID=1000
 ARG GID=1000
 

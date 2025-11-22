@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: ./docker/php-fpm/Dockerfile
     volumes:
-      - .:/usr/local/apache2/htdocs
+      - /mnt/apache:/usr/local/apache2/htdocs
     networks:
       - red_app
       - infra_db
@@ -18,8 +18,8 @@ services:
     ports:
       - "8080:80"
     volumes:
-      - .:/usr/local/apache2/htdocs:ro
-      - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - /mnt/apache:/usr/local/apache2/htdocs:ro
+      - /mnt/apache/docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
     depends_on:
       - php-fpm
     networks:

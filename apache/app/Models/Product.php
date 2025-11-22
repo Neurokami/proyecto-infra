@@ -13,6 +13,8 @@ class Product extends Authenticatable
     use HasFactory, Notifiable;
 
     protected $table = "productos";
+    protected $primaryKey = 'id_producto';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.
